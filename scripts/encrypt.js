@@ -10,5 +10,6 @@ function encrypt() {
             break;
     }
 
+    document.getElementById("output").innerHTML = encrypted;
     console.log("Encrypting text: " + text + " with algorithm: " + algorithm);
 }
