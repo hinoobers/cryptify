@@ -8,6 +8,11 @@ function encrypt() {
             console.log("Encrypting with base64");
             encrypted = btoa(text);
             break;
+        case "rot13":
+            encrypted = text.replace(/[a-zA-Z]/g, function(c) {
+                return String.fromCharCode(c.charCodeAt(0) + (c.toLowerCase() <= "m" ? 13 : -13));
+            });
+            break;
     }
 
     document.getElementById("output").innerHTML = encrypted;
