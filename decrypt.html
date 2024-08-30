@@ -4,9 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Decrypt Page</title>
+    <script src="scripts/decrypt.js"></script>
 </head>
 <body>
     <h1>Decrypt Page</h1>
-    
+
+    <input type="text" id="input" placeholder="Enter text to decrypt">
+    <select id="algorithm">
+        <option value="multidecrypt">Multidecrypt</option>
+        <option value="base64">Base64</option>
+    </select>
+    <button onclick="decrypt()">Decrypt</button>
+    <p id="output"></p>
 </body>
 </html>
