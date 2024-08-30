@@ -1,0 +1,29 @@
+body {
+    background-color: rgb(54, 54, 54);
+}
+
+h1 {
+    color: white;
+}
+
+input {
+    color: black;
+    font-size: 16px;
+    border-radius: 5px;
+}
+
+select {
+    font-size: 16px;
+    border-radius: 5px;
+}
+
+button {
+    font-size: 16px;
+    border-radius: 5px;
+    background-color: lightblue;
+}
+
+p {
+    text-align: center;
+    color: white;
+}
