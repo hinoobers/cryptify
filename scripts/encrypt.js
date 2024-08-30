@@ -1,3 +1,29 @@
+function atbashCipher(str) {
+    const result = [];
+    const alphabet = 'abcdefghijklmnopqrstuvwxyz';
+    const reversedAlphabet = alphabet.split('').reverse().join('');
+
+    for (let i = 0; i < str.length; i++) {
+        const char = str[i];
+        const isUpperCase = char >= 'A' && char <= 'Z';
+        const isLowerCase = char >= 'a' && char <= 'z';
+
+        if (isUpperCase || isLowerCase) {
+            const index = isUpperCase
+                ? alphabet.indexOf(char.toLowerCase())
+                : alphabet.indexOf(char);
+            const newChar = isUpperCase
+                ? reversedAlphabet[index].toUpperCase()
+                : reversedAlphabet[index];
+            result.push(newChar);
+        } else {
+            result.push(char);
+        }
+    }
+
+    return result.join('');
+}
+
 function encrypt() {
     var text = document.getElementById("input").value;
     var algorithm = document.getElementById("algorithm").value;
@@ -17,6 +43,9 @@ function encrypt() {
             encrypted = text.split("").map(function(c) {
                 return c.charCodeAt(0).toString(16);
             }).join("");
+            break;
+        case "atbash":
+            encrypted = atbashCipher(text);
             break;
     }
 

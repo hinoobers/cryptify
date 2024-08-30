@@ -1,4 +1,4 @@
-const algorithms = ["base64", "rot13", "hex"];
+const algorithms = ["base64", "rot13", "hex", "atbash"];
 
 function decryptString(str, algo) {
     var decrypted = "";
@@ -14,6 +14,24 @@ function decryptString(str, algo) {
         case "hex":
             decrypted = str.match(/.{1,2}/g).map(function(c) {
                 return String.fromCharCode(parseInt(c, 16));
+            }).join("");
+            break;
+        case "atbash":
+            console.log("Decrypting with atbash");
+            decrypted = str.split("").map(function(c) {
+                const isUpperCase = c >= 'A' && c <= 'Z';
+                const isLowerCase = c >= 'a' && c <= 'z';
+                if (isUpperCase || isLowerCase) {
+                    const index = isUpperCase
+                        ? 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.indexOf(c.toLowerCase())
+                        : 'abcdefghijklmnopqrstuvwxyz'.indexOf(c);
+                    const newChar = isUpperCase
+                        ? 'ZYXWVUTSRQPONMLKJIHGFEDCBA'[index]
+                        : 'zyxwvutsrqponmlkjihgfedcba'[index];
+                    return newChar;
+                } else {
+                    return c;
+                }
             }).join("");
             break;
     }
@@ -32,8 +50,10 @@ function decrypt() {
             decrypted.push(decryptString(text, algorithms[i]) + " (" + algorithms[i] + ")");
         }
     } else {
+        console.log("Decrypting text: " + text + " with algorithm: " + algorithm);
         decrypted = decryptString(text, algorithm);
     }
 
-    document.getElementById("output").innerHTML = decrypted.join("<br>");
+    console.log(typeof decrypted);
+    document.getElementById("output").innerHTML = typeof decrypted == "string" ? decrypted : decrypted.join("<br>");
 }
