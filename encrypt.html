@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Encrypt</title>
+    <script src="scripts/encrypt.js"></script>
+</head>
+<body>
+    <h1>Encryption Page</h1>
+    
+    <input type="text" id="input" placeholder="Enter text to encrypt">
+    <select id="algorithm">
+        <option value="aes-128-cbc">AES-128-CBC</option>
+        <option value="aes-128-ecb">AES-128-ECB</option>
+        <option value="aes-192-cbc">AES-192-CBC</option>
+        <option value="aes-192-ecb">AES-192-ECB</option>
+        <option value="aes-256-cbc">AES-256-CBC</option>
+        <option value="aes-256-ecb">AES-256-ECB</option>
+    </select>
+    <button onclick="encrypt()">Encrypt</button>
+</body>
+</html>
