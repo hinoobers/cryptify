@@ -1,4 +1,4 @@
-const algorithms = ["base64", "rot13"];
+const algorithms = ["base64", "rot13", "hex"];
 
 function decryptString(str, algo) {
     var decrypted = "";
@@ -11,6 +11,11 @@ function decryptString(str, algo) {
                 return String.fromCharCode(c.charCodeAt(0) + (c.toLowerCase() <= "m" ? 13 : -13));
             });
             break;
+        case "hex":
+            decrypted = str.match(/.{1,2}/g).map(function(c) {
+                return String.fromCharCode(parseInt(c, 16));
+            }).join("");
+            break;
     }
     return decrypted;
 }
@@ -22,6 +27,7 @@ function decrypt() {
     var decrypted;
     if(algorithm == "multidecrypt") {
         decrypted = [];
+        decrypted.push("Potential decryptions:");
         for(var i = 0; i < algorithms.length; i++) {
             decrypted.push(decryptString(text, algorithms[i]) + " (" + algorithms[i] + ")");
         }

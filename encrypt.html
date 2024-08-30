@@ -9,12 +9,18 @@
 </head>
 <body>
     <h1>Encryption Page</h1>
+
+    <header>
+        <a href="decrypt.html">Decrypt</a>
+    </header>
     
     <input type="text" id="input" placeholder="Enter text to encrypt">
     <select id="algorithm">
         <option value="base64">Base64</option>
         <option value="rot13">ROT13</option>
+        <option value="hex">HEX</option>
     </select>
+
     <button onclick="encrypt()">Encrypt</button>
     <p id="output"></p>
 </body>

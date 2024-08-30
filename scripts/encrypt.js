@@ -13,6 +13,11 @@ function encrypt() {
                 return String.fromCharCode(c.charCodeAt(0) + (c.toLowerCase() <= "m" ? 13 : -13));
             });
             break;
+        case "hex":
+            encrypted = text.split("").map(function(c) {
+                return c.charCodeAt(0).toString(16);
+            }).join("");
+            break;
     }
 
     document.getElementById("output").innerHTML = encrypted;
