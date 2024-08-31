@@ -47,7 +47,11 @@ function decrypt() {
         decrypted = [];
         decrypted.push("Potential decryptions:");
         for(var i = 0; i < algorithms.length; i++) {
-            decrypted.push(decryptString(text, algorithms[i]) + " (" + algorithms[i] + ")");
+            try {
+                decrypted.push(decryptString(text, algorithms[i]) + " (" + algorithms[i] + ")");
+            } catch(e) {
+                console.log("Failed to decrypt with algorithm: " + algorithms[i]);
+            }
         }
     } else {
         console.log("Decrypting text: " + text + " with algorithm: " + algorithm);

@@ -1,3 +1,15 @@
+const algorithms = ["base64", "rot13", "hex", "atbash"];
+
+document.addEventListener("DOMContentLoaded", function() {
+    var select = document.getElementById("algorithm");
+    for(var i = 0; i < algorithms.length; i++) {
+        console.log("Adding algorithm: " + algorithms[i]);
+        var option = document.createElement("option");
+        option.text = algorithms[i];
+        select.add(option);
+    }
+});
+
 function atbashCipher(str) {
     const result = [];
     const alphabet = 'abcdefghijklmnopqrstuvwxyz';
