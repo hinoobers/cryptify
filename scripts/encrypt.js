@@ -1,4 +1,4 @@
-const algorithms = {"base64": {"needsKey": false}, "rot13": {"needsKey": false}, "hex": {"needsKey": false}, "atbash": {"needsKey": false}, "caesar": {"needsKey": true}, "vigenere": {"needsKey": true}, "reverse": {"needsKey": false}, "scytale": {"needsKey": true}};
+const algorithms = {"base64": {"needsKey": false}, "rot13": {"needsKey": false}, "hex": {"needsKey": false}, "atbash": {"needsKey": false}, "caesar": {"needsKey": true, "keyDigitsOnly": true}, "vigenere": {"needsKey": true}, "reverse": {"needsKey": false}, "scytale": {"needsKey": true}};
 
 document.addEventListener("DOMContentLoaded", function() {
     var select = document.getElementById("algorithm");
@@ -18,6 +18,11 @@ document.addEventListener("DOMContentLoaded", function() {
         console.log("Selected algorithm: " + algorithm);
         if(algorithms[algorithm].needsKey) {
             document.getElementById("key").style.display = "block";
+            if(algorithms[algorithm].keyDigitsOnly) {
+                document.getElementById("key").type = "number";
+            } else {
+                document.getElementById("key").type = "text";
+            }
         } else {
             document.getElementById("key").style.display = "none";
         }
@@ -71,6 +76,10 @@ function scytaleEncrypt(text, column) {
 
 function encrypt() {
     var text = document.getElementById("input").value;
+    if(text == "") {
+        alert("Please enter some text to encrypt");
+        return;
+    }
     var algorithm = document.getElementById("algorithm").value;
     var key = document.getElementById("key").value;
 

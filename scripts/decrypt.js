@@ -82,6 +82,10 @@ function decryptString(str, key, algo) {
 
 function decrypt() {
     var text = document.getElementById("input").value;
+    if(text == "") {
+        alert("Please enter some text to decrypt");
+        return;
+    }
     var algorithm = document.getElementById("algorithm").value;
     var key = document.getElementById("key").value;
 
