@@ -1,6 +1,7 @@
-const algorithms = ["base64", "rot13", "hex", "atbash"];
+const algorithms = ["base64", "rot13", "hex", "atbash", "caesar"];
 
-function decryptString(str, algo) {
+function decryptString(str, key, algo) {
+    console.log("Decrypting string: " + str + " with algorithm: " + algo, " and key: " + key);
     var decrypted = "";
     switch(algo) {
         case "base64":
@@ -34,6 +35,13 @@ function decryptString(str, algo) {
                 }
             }).join("");
             break;
+        case "caesar":
+            decrypted = str.split("").map(function(c, i) {
+                var shift = parseInt(key[i % key.length]); 
+                var base = c.charCodeAt(0) >= 97 ? 97 : 65;
+                return String.fromCharCode(((c.charCodeAt(0) - base - shift + 26) % 26) + base);
+            }).join("");
+            break;
     }
     return decrypted;
 }
@@ -41,6 +49,7 @@ function decryptString(str, algo) {
 function decrypt() {
     var text = document.getElementById("input").value;
     var algorithm = document.getElementById("algorithm").value;
+    var key = document.getElementById("key").value;
 
     var decrypted;
     if(algorithm == "multidecrypt") {
@@ -48,14 +57,14 @@ function decrypt() {
         decrypted.push("Potential decryptions:");
         for(var i = 0; i < algorithms.length; i++) {
             try {
-                decrypted.push(decryptString(text, algorithms[i]) + " (" + algorithms[i] + ")");
+                decrypted.push(decryptString(text, key, algorithms[i]) + " (" + algorithms[i] + ")");
             } catch(e) {
                 console.log("Failed to decrypt with algorithm: " + algorithms[i]);
             }
         }
     } else {
         console.log("Decrypting text: " + text + " with algorithm: " + algorithm);
-        decrypted = decryptString(text, algorithm);
+        decrypted = decryptString(text, key, algorithm);
     }
 
     console.log(typeof decrypted);

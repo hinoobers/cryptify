@@ -15,12 +15,14 @@
     </header>
 
     <input type="text" id="input" placeholder="Enter text to decrypt">
+    <input type="text" id="key" placeholder="Enter key (if needed)">
     <select id="algorithm">
         <option value="multidecrypt">Multidecrypt</option>
         <option value="base64">Base64</option>
         <option value="rot13">ROT13</option>
         <option value="hex">HEX</option>
         <option value="atbash">Atbash</option>
+        <option value="caesar">Caesar</option>
     </select>
     <button onclick="decrypt()">Decrypt</button>
     <p id="output"></p>

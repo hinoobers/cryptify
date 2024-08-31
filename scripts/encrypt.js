@@ -1,14 +1,29 @@
-const algorithms = ["base64", "rot13", "hex", "atbash"];
+const algorithms = {"base64": {"needsKey": false}, "rot13": {"needsKey": false}, "hex": {"needsKey": false}, "atbash": {"needsKey": false}, "caesar": {"needsKey": true}};
 
 document.addEventListener("DOMContentLoaded", function() {
     var select = document.getElementById("algorithm");
-    for(var i = 0; i < algorithms.length; i++) {
-        console.log("Adding algorithm: " + algorithms[i]);
-        var option = document.createElement("option");
-        option.text = algorithms[i];
-        select.add(option);
+    for (var algorithm in algorithms) {
+        if (algorithms.hasOwnProperty(algorithm)) {
+            console.log("Adding algorithm: " + algorithm);
+            var option = document.createElement("option");
+            option.text = algorithm;
+            option.value = algorithm; 
+            select.add(option);
+        }
     }
+
+    document.getElementById("key").style.display = "none";
+    document.getElementById("algorithm").addEventListener("change", function() {
+        var algorithm = document.getElementById("algorithm").value;
+        console.log("Selected algorithm: " + algorithm);
+        if(algorithms[algorithm].needsKey) {
+            document.getElementById("key").style.display = "block";
+        } else {
+            document.getElementById("key").style.display = "none";
+        }
+    });
 });
+
 
 function atbashCipher(str) {
     const result = [];
@@ -39,6 +54,7 @@ function atbashCipher(str) {
 function encrypt() {
     var text = document.getElementById("input").value;
     var algorithm = document.getElementById("algorithm").value;
+    var key = document.getElementById("key").value;
 
     var encrypted = "";
     switch(algorithm) {
@@ -58,6 +74,13 @@ function encrypt() {
             break;
         case "atbash":
             encrypted = atbashCipher(text);
+            break;
+        case "caesar":
+            encrypted = text.split("").map(function(c, i) {
+                var shift = parseInt(key[i % key.length]); 
+                var base = c.charCodeAt(0) >= 97 ? 97 : 65;
+                return String.fromCharCode(((c.charCodeAt(0) - base + shift) % 26) + base);
+            }).join("");
             break;
     }
 
