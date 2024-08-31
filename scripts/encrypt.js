@@ -1,4 +1,4 @@
-const algorithms = {"base64": {"needsKey": false}, "rot13": {"needsKey": false}, "hex": {"needsKey": false}, "atbash": {"needsKey": false}, "caesar": {"needsKey": true}};
+const algorithms = {"base64": {"needsKey": false}, "rot13": {"needsKey": false}, "hex": {"needsKey": false}, "atbash": {"needsKey": false}, "caesar": {"needsKey": true}, "vigenere": {"needsKey": true}};
 
 document.addEventListener("DOMContentLoaded", function() {
     var select = document.getElementById("algorithm");
@@ -79,6 +79,14 @@ function encrypt() {
             encrypted = text.split("").map(function(c, i) {
                 var shift = parseInt(key[i % key.length]); 
                 var base = c.charCodeAt(0) >= 97 ? 97 : 65;
+                return String.fromCharCode(((c.charCodeAt(0) - base + shift) % 26) + base);
+            }).join("");
+            break;
+        case "vigenere":
+            key = key.toLowerCase();
+            encrypted = text.split("").map(function(c, i) {
+                var base = c.charCodeAt(0) >= 97 ? 97 : 65;
+                var shift = key.charCodeAt(i % key.length) - 97;
                 return String.fromCharCode(((c.charCodeAt(0) - base + shift) % 26) + base);
             }).join("");
             break;

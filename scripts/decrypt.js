@@ -1,4 +1,4 @@
-const algorithms = ["base64", "rot13", "hex", "atbash", "caesar"];
+const algorithms = ["base64", "rot13", "hex", "atbash", "caesar", "vigenere"];
 
 function decryptString(str, key, algo) {
     console.log("Decrypting string: " + str + " with algorithm: " + algo, " and key: " + key);
@@ -39,6 +39,14 @@ function decryptString(str, key, algo) {
             decrypted = str.split("").map(function(c, i) {
                 var shift = parseInt(key[i % key.length]); 
                 var base = c.charCodeAt(0) >= 97 ? 97 : 65;
+                return String.fromCharCode(((c.charCodeAt(0) - base - shift + 26) % 26) + base);
+            }).join("");
+            break;
+        case "vigenere":
+            key = key.toLowerCase();
+            decrypted = str.split("").map(function(c, i) {
+                var base = c.charCodeAt(0) >= 97 ? 97 : 65;
+                var shift = key.charCodeAt(i % key.length) - 97;
                 return String.fromCharCode(((c.charCodeAt(0) - base - shift + 26) % 26) + base);
             }).join("");
             break;
