@@ -1,4 +1,4 @@
-const algorithms = {"base64": {"needsKey": false}, "rot13": {"needsKey": false}, "hex": {"needsKey": false}, "atbash": {"needsKey": false}, "caesar": {"needsKey": true}, "vigenere": {"needsKey": true}};
+const algorithms = {"base64": {"needsKey": false}, "rot13": {"needsKey": false}, "hex": {"needsKey": false}, "atbash": {"needsKey": false}, "caesar": {"needsKey": true}, "vigenere": {"needsKey": true}, "reverse": {"needsKey": false}, "scytale": {"needsKey": true}};
 
 document.addEventListener("DOMContentLoaded", function() {
     var select = document.getElementById("algorithm");
@@ -51,6 +51,24 @@ function atbashCipher(str) {
     return result.join('');
 }
 
+function scytaleEncrypt(text, column) {
+    let token = text.split('')
+    let rows = token.length / column
+    let result = ''
+  
+    for (let i = 0; i < column; i++) {
+      for (let j = 0; j < rows; j++) {
+        if ((j * column) + i < (token.length)) {
+          result = result + token[(j * column) + i]
+        } else {
+          result = result + '*'
+        }
+      }
+    }
+    return result;
+}
+
+
 function encrypt() {
     var text = document.getElementById("input").value;
     var algorithm = document.getElementById("algorithm").value;
@@ -90,6 +108,15 @@ function encrypt() {
                 return String.fromCharCode(((c.charCodeAt(0) - base + shift) % 26) + base);
             }).join("");
             break;
+        case "reverse":
+            encrypted = text.split("").reverse().join("");
+            break;
+        case "scytale":
+            var width = parseInt(key);
+            encrypted = scytaleEncrypt(text, width);
+
+            break;
+
     }
 
     document.getElementById("output").innerHTML = encrypted;

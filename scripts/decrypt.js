@@ -1,4 +1,22 @@
-const algorithms = ["base64", "rot13", "hex", "atbash", "caesar", "vigenere"];
+const algorithms = ["base64", "rot13", "hex", "atbash", "caesar", "vigenere", "reverse", "scytale"];
+
+function scytaleDecrypt(text, column) {
+    let token = text.split('')
+    let rows = token.length / column
+    let result = ''
+  
+    for (let j = 0; j < rows; j++) {
+      for (let i = 0; i < column; i++) {
+        if ((j * column) + i < (token.length)) {
+          result = result + token[(i * rows) + j]
+        } else {
+          result = result + '*'
+        }
+      }
+    }
+  
+    return result
+}
 
 function decryptString(str, key, algo) {
     console.log("Decrypting string: " + str + " with algorithm: " + algo, " and key: " + key);
@@ -49,6 +67,14 @@ function decryptString(str, key, algo) {
                 var shift = key.charCodeAt(i % key.length) - 97;
                 return String.fromCharCode(((c.charCodeAt(0) - base - shift + 26) % 26) + base);
             }).join("");
+            break;
+        case "reverse":
+            decrypted = str.split("").reverse().join("");
+            break;
+        case "scytale":
+            console.log("sky");
+            var width = parseInt(key);
+            decrypted = scytaleDecrypt(str, width);
             break;
     }
     return decrypted;
